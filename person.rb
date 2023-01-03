@@ -18,4 +18,8 @@ class Person
   def of_age?
     @age >= 18
   end
+  
+  def generate_id 
+    @id = rand(1...1000)
+  end
 end
