@@ -40,6 +40,16 @@ class Person < Nameable
     of_age? || @parent_permission
   end
 end
+class Decorator < Nameable
+  def initialize(nameable)
+    @nameable = nameable
+  end
+
+  def correct_name
+    @nameable.correct_name
+  end
+end
+
 
 
 # person = Person.new(18, 'test_subject_1')
