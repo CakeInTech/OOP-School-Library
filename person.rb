@@ -1,4 +1,3 @@
-# rubocop:disable all
 class Nameable
   def correct_name
     raise NotImplementedError
@@ -14,6 +13,11 @@ class Person < Nameable
     @name = name
     @age = age
     @parent_permission = parent_permission
+    super()
+  end
+
+  def correct_name
+    @name
   end
 
   def can_use_services?
@@ -34,13 +38,13 @@ end
 class Decorator < Nameable
   def initialize(nameable)
     @nameable = nameable
+    super()
   end
 
   def correct_name
     @nameable.correct_name
   end
 end
-
 
 class CapitalizeDecorator < Decorator
   def correct_name
