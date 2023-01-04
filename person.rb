@@ -66,6 +66,5 @@ end
 # person = Person.new(18, 'test_subject_1')
 # person.correct_name
 # capitalizedPerson = CapitalizeDecorator.new(person)
-# capitalizedPerson.correct_name
-# capitalizedTrimmedPerson = TrimmerDecorator.new(capitalizedPerson)
-# capitalizedTrimmedPerson.correct_name
+
+
