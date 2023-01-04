@@ -63,8 +63,6 @@ class TrimmerDecorator < Decorator
 end
 
 
-# person = Person.new(18, 'test_subject_1')
-# person.correct_name
-# capitalizedPerson = CapitalizeDecorator.new(person)
+
 
 
