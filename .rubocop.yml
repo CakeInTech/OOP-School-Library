@@ -4,7 +4,6 @@ AllCops:
     - "Guardfile"
     - "Rakefile"
     - "node_modules/**/*"
-
   DisplayCopNames: true
 
 Layout/LineLength:
@@ -44,6 +43,9 @@ Lint/RaiseException:
   Enabled: false
 Lint/StructNewOverride:
   Enabled: false
+Lint/MissingSuper:
+  Exclude:
+    - '/person.rb'
 Style/HashEachMethods:
   Enabled: false
 Style/HashTransformKeys:
