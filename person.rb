@@ -23,3 +23,13 @@ class Person
     @id = rand(1...1000)
   end
 end
+
+class Decorator < Nameable
+  def initialize(nameable)
+    @nameable = nameable
+  end
+
+  def correct_name
+    @nameable.correct_name
+  end
+end
