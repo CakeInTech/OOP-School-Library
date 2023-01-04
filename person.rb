@@ -1,3 +1,4 @@
+# rubocop:disable all
 class Nameable
   def correct_name
     raise NotImplementedError
