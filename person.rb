@@ -1,14 +1,12 @@
 # rubocop:disable all
 require 'securerandom'
 
-####  Created a Class Nameable
 class Nameable
   def correct_name
     raise NotImplementedError
   end
 end
 
-####  Turned my person class to Nameable
 class Person < Nameable
   attr_accessor :name, :age
   attr_reader :id
