@@ -1,8 +1,8 @@
-require_relative 'nameable.rb'
+require_relative 'nameable'
 
 class Person < Nameable
   attr_accessor :name, :age
-  attr_reader :id, :rentals
+  attr_reader :id
 
   def initialize(age, name = 'Unknown', parent_permission: true)
     @id = generate_id
@@ -12,7 +12,7 @@ class Person < Nameable
     @rentals = []
     super()
   end
-  
+
   def rentals(rental)
     @rentals << rental
     rental.person = self
@@ -35,13 +35,12 @@ class Person < Nameable
   def of_age?
     @age >= 18
   end
-
 end
 
 
 # person = Person.new(22, 'maximilianus')
-  # person.correct_name
-  # capitalizedPerson = CapitalizeDecorator.new(person)
-  # capitalizedPerson.correct_name
-  # capitalizedTrimmedPerson = TrimmerDecorator.new(capitalizedPerson)
-  # capitalizedTrimmedPerson.correct_name
+# person.correct_name
+# capitalizedPerson = CapitalizeDecorator.new(person)
+# capitalizedPerson.correct_name
+# capitalizedTrimmedPerson = TrimmerDecorator.new(capitalizedPerson)
+# capitalizedTrimmedPerson.correct_name
