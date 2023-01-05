@@ -1,7 +1,7 @@
+#!/usr/bin/env ruby
 require_relative 'app'
 
 def list_of_options 
-    puts "Welcome to the Library System!"
     puts "choose an option from the following list:"
     puts "1. List all books"
     puts "2. List all people"

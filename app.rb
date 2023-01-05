@@ -15,7 +15,7 @@ class App
     end
 
     def start 
-        puts "Welcome to School Library app!"
+        puts "Welcome to the Library System!"
         list_of_options
     end
      
