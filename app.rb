@@ -40,12 +40,12 @@ class App
     person_type = gets.chomp
     case person_type
     when '1'
-      create_a_student
+      create_student
     when '2'
-      create_a_teacher
+      create_teacher
     else
       puts 'That is not a valid input'
-      create_a_person
+      create_person
     end
   end
 
@@ -101,6 +101,7 @@ class App
     puts 'Date:'
     date = gets.chomp
     @rentals << Rental.new(date, person, book)
+    puts "Rental created successfully!"
   end
 
   def list_rental_for_person
