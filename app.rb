@@ -101,7 +101,7 @@ class App
     puts 'Date:'
     date = gets.chomp
     @rentals << Rental.new(date, person, book)
-    puts "Rental created successfully!"
+    puts 'Rental created successfully!'
   end
 
   def list_rental_for_person
