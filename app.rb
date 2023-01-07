@@ -100,13 +100,13 @@ class App
     person = @people[person_index]
     puts 'Date:'
     date = gets.chomp
-    @rentals << Rental.new(date, book, person)
+    @rentals << Rental.new(date, person, book)
     puts 'Rental created successfully!'
   end
 
   def list_rental_for_person
     puts 'ID of person:'
-    id = gets.chomp.to_i
+    id = gets.chomp
     puts 'Rentals:'
     @rentals.select { |rental| rental.person.id == id }.each do |rental|
       puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
