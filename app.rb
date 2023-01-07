@@ -100,7 +100,7 @@ class App
     person = @people[person_index]
     puts 'Date:'
     date = gets.chomp
-    @rentals << Rental.new(date, person, book)
+    @rentals << Rental.new(date, book, person)
     puts 'Rental created successfully!'
   end
 
