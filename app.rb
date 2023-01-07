@@ -106,7 +106,7 @@ class App
 
   def list_rental_for_person
     puts 'ID of person:'
-    id = gets.chomp
+    id = gets.chomp.to_i
     puts 'Rentals:'
     @rentals.select { |rental| rental.person.id == id }.each do |rental|
       puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"

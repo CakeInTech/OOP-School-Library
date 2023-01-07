@@ -9,7 +9,7 @@ def list_of_options
   puts '5. Create a rental'
   puts '6. List all rentals for a given person id'
   puts '7. Exit'
-  option_integer = gets.chomp.to_i
+  option_integer = gets.chomp
   options(option_integer)
   extras(option_integer)
 end
