@@ -71,32 +71,19 @@ class App
   end
 
   def create_rental
-    puts 'Select a book from the following list by number'
-    @books.each_with_index do |book, index|
-      puts "#{index} Title: #{book.title}, Author: #{book.author}"
-    end
-    puts 'Book number:'
-    book_index = gets.chomp.to_i
-    book = @books[book_index]
-    puts 'Select a person from the following list by number (not id)'
-    @people.each_with_index do |person, index|
-      puts "#{index} [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
-    end
-    person_index = gets.chomp.to_i
-    person = @people[person_index]
-    puts 'Date:'
-    date = gets.chomp
-    @rentals << Rental.new(date, person, book)
+    book = select_book
+    person = select_person
+    date = get_rental_date
+    rentals << Rental.new(date, person, book)
     puts 'Rental created successfully!'
   end
 
+
   def list_rental_for_person
-    puts 'ID of person:'
-    id = gets.chomp.to_i
-    puts 'Rentals:'
-    @rentals.select { |rental| rental.person.id == id }.each do |rental|
-      puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
-    end
+   id = get_id
+   puts 'Rentals:'
+   rentals.select {|rental| rental.person.id == id }.each do |rental| 
+    puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
   end
 end
 
@@ -131,4 +118,25 @@ def get_book_attributes
   puts 'Author:'
   author = gets.chomp
   {title: title, author: author }
+end
+
+def select_book 
+  puts 'Select a book by its ID:'
+  id = gets.chomp
+  book = books.find {|b| b.id == id}
+  if book.nil?
+    puts 'Book not found'
+    select_book
+  else 
+    book
+  end
+end
+
+def get_rental_date 
+  puts 'Enter the rental date (YYY-MM-DD): '
+  gets.chomp
+
+def get_id 
+  puts 'Enter the ID:'
+  gets.chomp
 end
