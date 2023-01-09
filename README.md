@@ -85,6 +85,12 @@ ruby bundle
 - [Twitter](https://twitter.com/MohamedCK0)
 - [LinkedIn](https://www.linkedin.com/in/mohamed-abdulhakim-2868521b6/)
 
+👤 Harrison Njuguna
+
+- GitHub: https://github.com/Harrynoqs)
+- Twitter: https://twitter.com/noqsnoq1
+- LinkedIn:https://linkedin.com/in/harrisonw-njuguna
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
