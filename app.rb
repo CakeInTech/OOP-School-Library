@@ -73,73 +73,78 @@ class App
     puts 'Book created!'
   end
 
+  ##### Book renting
   def create_rental
     book = select_book
     person = select_person
-    date = get_rental_date
-    rentals << Rental.new(date, person, book)
+    puts 'Date:'
+    date = gets.chomp
+    @rentals << Rental.new(date, person, book)
     puts 'Rental created successfully!'
   end
 
+  def select_book
+    puts 'Select a book from the following list by number'
+    @books.each_with_index do |book, index|
+      puts "#{index} Title: #{book.title}, Author: #{book.author}"
+    end
+    puts 'Book number:'
+    book_index = gets.chomp.to_i
+    @books[book_index]
+  end
+
+  def select_person
+    puts 'Select a person from the following list by number (not id)'
+    @people.each_with_index do |person, index|
+      puts "#{index} [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+    end
+    puts 'Person number:'
+    person_index = gets.chomp.to_i
+    @people[person_index]
+  end
 
   def list_rental_for_person
-   id = get_id
-   puts 'Rentals:'
-   rentals.select {|rental| rental.person.id == id }.each do |rental| 
-    puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
+    id = yoink_id
+    puts 'Rentals:'
+    rentals.select { |rental| rental.person.id == id }.each do |rental|
+      puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
+    end
+  end
+
+  #######  Attributes for the methods
+
+  private
+
+  def yoink_student_attributes
+    puts 'Age'
+    age = gets.chomp
+    puts 'Name:'
+    name = gets.chomp
+    puts 'Has parent permission? [Y/N]'
+    parent_permission = gets.chomp
+    { age: age, name: name, parent_permission: parent_permission.downcase == 'y' }
+  end
+
+  def yoink_teacher_attributes
+    puts 'Age:'
+    age = gets.chomp
+    puts 'Specialization:'
+    specialization = gets.chomp
+    puts 'Name:'
+    name = gets.chomp
+    { age: age, specialization: specialization, name: name }
+  end
+
+  def yoink_book_attributes
+    puts 'Title:'
+    title = gets.chomp
+    puts 'Author:'
+    author = gets.chomp
+    { title: title, author: author }
   end
 end
 
-#######  Attributes for the methods
-
-private
-
-def yoink_student_attributes
-  puts 'Age'
-  age = gets.chomp
-  puts 'Name:'
-  name = gets.chomp
-  puts 'Has parent permission? [Y/N]'
-  parent_permission = gets.chomp
-  { age: age, name: name, parent_permission: parent_permission.downcase == 'y' }
-end
-
-def yoink_teacher_attributes
-  puts 'Age:'
-  age = gets.chomp
-  puts 'Specialization:'
-  specialization = gets.chomp
-  puts 'Name:'
-  name = gets.chomp
-  { age: age, specialization: specialization, name: name }
-end
-
-def yoink_book_attributes
-  puts 'Title:'
-  title = gets.chomp
-  puts 'Author:'
-  author = gets.chomp
-  {title: title, author: author }
-end
-
-def select_book 
-  puts 'Select a book by its ID:'
-  id = gets.chomp
-  book = books.find {|b| b.id == id}
-  if book.nil?
-    puts 'Book not found'
-    select_book
-  else 
-    book
-  end
-end
-
-def get_rental_date 
-  puts 'Enter the rental date (YYY-MM-DD): '
-  gets.chomp
-end
-
-def get_id 
+def yoink_id
   puts 'Enter the ID:'
   gets.chomp
 end
