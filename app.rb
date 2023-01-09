@@ -34,16 +34,16 @@ class App
       puts 'No books found'
       return
     end
-    books.each { |book| puts "Title: #{book.title}, Author: #{book.author}"}
+    books.each { |book| puts "Title: #{book.title}, Author: #{book.author}" }
   end
 
   def create_person
     puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]:'
     person_type = gets.chomp
     case person_type
-    when '1' then
+    when '1'
       create_student
-    when '2' then
+    when '2'
       create_teacher
     else
       puts 'That is not a valid input'
@@ -52,22 +52,25 @@ class App
   end
 
   def create_student
-    student_attributes = get_student_attributes
-    student = Student.new(nil, student_attributes[:age], student_attributes[:name], student_attributes[:parent_permission])
+    student_attributes = yoink_student_attributes
+    student = Student.new(nil, student_attributes[:age], student_attributes[:name],
+                          student_attributes[:parent_permission])
     people << student
-    puts "Person(student) Created successfully"
+    puts 'Person(student) Created successfully'
   end
 
   def create_teacher
-    teacher_attributes = get_teacher_attributes
+    teacher_attributes = yoink_teacher_attributes
     teacher = Teacher.new(teacher_attributes[:age], teacher_attributes[:specialization], teacher_attributes[:name])
-    people << teacherputs 'Person(Teacher) created successfully'
+    people << teacher
+    puts 'Person(Teacher) created successfully'
   end
 
   def create_book
-     book_attributes = get_book_attributes
-     book = Book.new(book_attributes[:title], book_attributes[:author])
-     books << bookputs "Book created!"
+    book_attributes = yoink_book_attributes
+    book = Book.new(book_attributes[:title], book_attributes[:author])
+    books << book
+    puts 'Book created!'
   end
 
   def create_rental
@@ -89,30 +92,29 @@ end
 
 #######  Attributes for the methods
 
-private 
+private
 
-def get_student_attributes
+def yoink_student_attributes
   puts 'Age'
   age = gets.chomp
   puts 'Name:'
   name = gets.chomp
   puts 'Has parent permission? [Y/N]'
   parent_permission = gets.chomp
-  {age: age, name: name, parent_permission: parent_permission.downcase == 'y'}
+  { age: age, name: name, parent_permission: parent_permission.downcase == 'y' }
 end
 
-
-def get_teacher_attributes
+def yoink_teacher_attributes
   puts 'Age:'
   age = gets.chomp
   puts 'Specialization:'
   specialization = gets.chomp
   puts 'Name:'
   name = gets.chomp
-  {age: age, specialization: specialization, name: name}
+  { age: age, specialization: specialization, name: name }
 end
 
-def get_book_attributes
+def yoink_book_attributes
   puts 'Title:'
   title = gets.chomp
   puts 'Author:'
@@ -135,6 +137,7 @@ end
 def get_rental_date 
   puts 'Enter the rental date (YYY-MM-DD): '
   gets.chomp
+end
 
 def get_id 
   puts 'Enter the ID:'
