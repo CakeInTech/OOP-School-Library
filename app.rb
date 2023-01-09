@@ -41,9 +41,9 @@ class App
     puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]:'
     person_type = gets.chomp
     case person_type
-    when '1'
+    when '1' then
       create_student
-    when '2'
+    when '2' then
       create_teacher
     else
       puts 'That is not a valid input'
@@ -52,38 +52,22 @@ class App
   end
 
   def create_student
-    puts 'Age:'
-    age = gets.chomp
-    puts 'Name:'
-    name = gets.chomp
-    puts 'Has parent permission? [Y/N]'
-    parent_permission = gets.chomp
-    parent_permission = parent_permission.downcase == 'y'
-    student = Student.new(nil, age, name, parent_permission)
-    @people << student
-    puts 'Person(Student) created successfully'
+    student_attributes = get_student_attributes
+    student = Student.new(nil, student_attributes[:age], student_attributes[:name], student_attributes[:parent_permission])
+    people << student
+    puts "Person(student) Created successfully"
   end
 
   def create_teacher
-    puts 'Age:'
-    age = gets.chomp
-    puts 'Name:'
-    name = gets.chomp
-    puts 'Specialization:'
-    specialization = gets.chomp
-    teacher = Teacher.new(age, specialization, name)
-    @people << teacher
-    puts 'Person(Teacher) created successfully'
+    teacher_attributes = get_teacher_attributes
+    teacher = Teacher.new(teacher_attributes[:age], teacher_attributes[:specialization], teacher_attributes[:name])
+    people << teacherputs 'Person(Teacher) created successfully'
   end
 
   def create_book
-    puts 'Title:'
-    title = gets.chomp
-    puts 'Author:'
-    author = gets.chomp
-    book = Book.new(title, author)
-    @books << book
-    puts 'Book created'
+     book_attributes = get_book_attributes
+     book = Book.new(book_attributes[:title], book_attributes[:author])
+     books << bookputs "Book created!"
   end
 
   def create_rental
