@@ -99,3 +99,36 @@ class App
     end
   end
 end
+
+#######  Attributes for the methods
+
+private 
+
+def get_student_attributes
+  puts 'Age'
+  age = gets.chomp
+  puts 'Name:'
+  name = gets.chomp
+  puts 'Has parent permission? [Y/N]'
+  parent_permission = gets.chomp
+  {age: age, name: name, parent_permission: parent_permission.downcase == 'y'}
+end
+
+
+def get_teacher_attributes
+  puts 'Age:'
+  age = gets.chomp
+  puts 'Specialization:'
+  specialization = gets.chomp
+  puts 'Name:'
+  name = gets.chomp
+  {age: age, specialization: specialization, name: name}
+end
+
+def get_book_attributes
+  puts 'Title:'
+  title = gets.chomp
+  puts 'Author:'
+  author = gets.chomp
+  {title: title, author: author }
+end
