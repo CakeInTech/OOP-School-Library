@@ -117,9 +117,6 @@ Feel free to check the [issues page](../../issues/).
 
 > I would like to thank Microverse for providing the opportunity and  my coding partner for assisting me throughout the project.
 
-> I would like to thank [Nelson Sakwa](https://www.behance.net/sakwadesignstudio)  for the amazing design idea on Behance
-
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 📝 License <a name="license"></a>
