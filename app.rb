@@ -30,9 +30,11 @@ class App
   end
 
   def list_all_people
-    @people.each do |person|
-      puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+    if books.empty?
+      puts 'No books found'
+      return
     end
+    books.each { |book| puts "Title: #{book.title}, Author: #{book.author}"}
   end
 
   def create_person
