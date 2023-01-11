@@ -13,6 +13,10 @@ class Person < Nameable
     super()
   end
 
+  def self.from_h(data)
+    self.new(data[:id], data[:name], data[:age])
+  end
+
   def add_rentals(rental)
     @rentals << rental
     rental.person = self

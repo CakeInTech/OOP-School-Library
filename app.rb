@@ -1,3 +1,6 @@
+require 'pry'
+require 'json'
+require 'fileutils'
 require_relative "rental"
 require_relative "person"
 require_relative "classroom"
@@ -12,13 +15,15 @@ class App
     @books = []
     @people = []
     @rentals = []
+    load_data
   end
-
+  
   def start
     puts "Welcome to the Library System!"
     list_of_options
+    save_data
   end
-
+  
   def list_all_books
     if @books.length.positive?
       @books.each do |book|
@@ -28,15 +33,20 @@ class App
       puts "No books found"
     end
   end
-
+  
   def list_all_people
-    if books.empty?
-      puts "No books found"
+    
+    if @people.empty?
+      puts "No people found"
       return
     end
-    books.each { |book| puts "Title: #{book.title}, Author: #{book.author}" }
+    @people.each { |person| 
+      if person.nil?
+        next
+      end
+      puts "Name: #{person.name}, Age: #{person.age}"}
   end
-
+  
   def create_person
     puts "Do you want to create a student (1) or a teacher (2)? [Input the number]:"
     person_type = gets.chomp
@@ -55,11 +65,11 @@ class App
     student_attributes = yoink_student_attributes
     student = Student.new(nil, student_attributes[:age], student_attributes[:name],
       student_attributes[:parent_permission])
-    people << student
-    puts "Person(student) Created successfully"
-  end
-
-  def create_teacher
+      people << student
+      puts "Person(student) Created successfully"
+    end
+  
+    def create_teacher
     teacher_attributes = yoink_teacher_attributes
     teacher = Teacher.new(teacher_attributes[:age], teacher_attributes[:specialization], teacher_attributes[:name])
     people << teacher
@@ -72,7 +82,7 @@ class App
     books << book
     puts "Book created!"
   end
-
+  
   ##### Book renting
   def create_rental
     book = select_book
@@ -82,7 +92,7 @@ class App
     @rentals << Rental.new(date, person, book)
     puts "Rental created successfully!"
   end
-
+  
   def select_book
     puts "Select a book from the following list by number"
     @books.each_with_index do |book, index|
@@ -92,7 +102,7 @@ class App
     book_index = gets.chomp.to_i
     @books[book_index]
   end
-
+  
   def select_person
     puts "Select a person from the following list by number (not id)"
     @people.each_with_index do |person, index|
@@ -110,7 +120,36 @@ class App
       puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
     end
   end
+    def save_data
+      File.write("books.json", @books.map(&:to_h).to_json)
+      File.write("rentals.json", @rentals.map(&:to_h).to_json)
+      File.write("people.json", @people.map(&:to_h).to_json)
+  end
 
+
+  def load_data 
+    books_json = File.read("books.json")
+    books_data = JSON.parse(books_json)
+    books_data.each do |book_data|
+      book = Book.new(book_data["title"], book_data["author"])
+      @books << book
+    end
+    
+    if File.exist?("people.json")
+      binding.pry
+      people_data = JSON.parse(File.read("people.json"))
+      @people = people_data.map { |person_data| Person.from_h(person_data) }
+    else
+      puts "people.json file not found"
+    end
+
+    rentals_json = File.read("rentals.json")
+    rentals_data = JSON.parse(rentals_json)
+    rentals_data.each do |rental_data| 
+      rental = Rental.new(rental_data["date"], @People.find {|p| p.id == rental_data["person_id"]}, @books.find {|b| b.id == rental_data["book_id"]})
+      @rentals << rental
+    end
+  end
   #######  Attributes for the methods
 
   private
@@ -142,9 +181,10 @@ class App
     author = gets.chomp
     {title: title, author: author}
   end
+  def yoink_id
+    puts "Enter the ID:"
+    gets.chomp
+  end
+
 end
 
-def yoink_id
-  puts "Enter the ID:"
-  gets.chomp
-end
