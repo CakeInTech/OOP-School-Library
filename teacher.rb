@@ -17,6 +17,7 @@ class Teacher < Person
     {
       age: age, 
       specialization: specialization, 
-      name: name}
+      name: name
+    }
   end
 end
