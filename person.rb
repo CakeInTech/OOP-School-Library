@@ -17,10 +17,10 @@ class Person < Nameable
   #   self.new(data[:id], data[:name], data[:age])
   # end
 
-  def to_h 
+  def to_h
     {
-      age: age, 
-      name: name,
+      age: age,
+      name: name
     }
   end
 
@@ -35,6 +35,7 @@ class Person < Nameable
 
   def can_use_services?
     return true if of_age? || @parent_permission
+
     false
   end
 

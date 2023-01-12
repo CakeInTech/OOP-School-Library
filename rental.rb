@@ -12,6 +12,6 @@ class Rental
   end
 
   def to_h
-    {date: date, person: person, book: book}
+    { date: date, person: person, book: book }
   end
 end

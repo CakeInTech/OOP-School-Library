@@ -15,8 +15,8 @@ class Teacher < Person
 
   def to_h
     {
-      age: age, 
-      specialization: specialization, 
+      age: age,
+      specialization: specialization,
       name: name
     }
   end

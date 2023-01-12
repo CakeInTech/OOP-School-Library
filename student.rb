@@ -18,10 +18,10 @@ class Student < Person
     classroom.add_student(self) unless classroom.student.include?(self)
   end
 
-  def to_h 
+  def to_h
     {
       name: name,
-      age: age, 
+      age: age
     }
   end
 end
