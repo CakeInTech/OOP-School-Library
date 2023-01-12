@@ -89,9 +89,10 @@ class App
     person = select_person
     puts "Date:"
     date = gets.chomp
-    @rentals << Rental.new(date, person, book)
+    rental = Rental.new(date, person, book)
+    @rentals << rental
     puts "Rental created successfully!"
-  end
+end
   
   def select_book
     puts "Select a book from the following list by number"
@@ -116,10 +117,15 @@ class App
   def list_rental_for_person
     id = yoink_id
     puts "Rentals:"
-    rentals.select { |rental| rental.person.id == id }.each do |rental|
-      puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
+    @rentals.each do |rental| 
+      if rental && rental.person && rental.person.id.to_i === id.to_i
+        puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
+      else 
+        puts "This person has no book rentals"
+      end
     end
-  end
+end
+
     def save_data
       File.write("books.json", @books.map(&:to_h).to_json)
       File.write("rentals.json", @rentals.map(&:to_h).to_json)
@@ -135,20 +141,19 @@ class App
       @books << book
     end
     
-    if File.exist?("people.json")
-      binding.pry
-      people_data = JSON.parse(File.read("people.json"))
-      @people = people_data.map { |person_data| Person.from_h(person_data) }
-    else
-      puts "people.json file not found"
-    end
+   people_data = JSON.parse(File.read("people.json"))
+   people_data.each do |person_data| 
+    person = Person.new(person_data["age"], person_data["name"])
+    @people << person
+   end
 
-    rentals_json = File.read("rentals.json")
-    rentals_data = JSON.parse(rentals_json)
-    rentals_data.each do |rental_data| 
-      rental = Rental.new(rental_data["date"], @People.find {|p| p.id == rental_data["person_id"]}, @books.find {|b| b.id == rental_data["book_id"]})
-      @rentals << rental
-    end
+   rentals_data = JSON.parse(File.read('rentals.json'))
+   rentals_data.each do |rental|
+     date = rental["date"]
+     person = @people.find { |p| p.id == rental["person_id"] }
+     book = @books.find { |b| b.id == rental["book_id"] }
+     @rentals << Rental.new(date, person, book)
+   end
   end
   #######  Attributes for the methods
 
