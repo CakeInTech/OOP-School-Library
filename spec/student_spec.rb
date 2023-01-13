@@ -1,7 +1,6 @@
 require 'rspec'
 require_relative '../student'
 
-
 describe Student do
   let(:classroom) { double('classroom') }
   let(:student) { Student.new(18, classroom, 'John Doe', true) }
