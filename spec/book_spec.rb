@@ -1,3 +1,4 @@
+require 'rspec'
 require_relative "../book"
 
 describe Book do 
