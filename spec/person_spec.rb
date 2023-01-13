@@ -2,13 +2,13 @@ require 'rspec'
 require_relative '../person'
 
 describe Person do
-  let(:person) { Person.new(20, 'John Doe') }
+  let(:person) { Person.new(30, 'Nico Robin') }
   let(:rental) { double('rental') }
 
   describe '#initialize' do
     it 'sets the name and age' do
-      expect(person.name).to eq('John Doe')
-      expect(person.age).to eq(20)
+      expect(person.name).to eq('Nico Robin')
+      expect(person.age).to eq(30)
     end
 
     it 'generates a unique id' do
@@ -29,7 +29,7 @@ describe Person do
 
   describe '#correct_name' do
     it 'returns the name of the person' do
-      expect(person.correct_name).to eq('John Doe')
+      expect(person.correct_name).to eq('Nico Robin')
     end
   end
 end
