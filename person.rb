@@ -13,6 +13,17 @@ class Person < Nameable
     super()
   end
 
+  # def self.from_h(data)
+  #   self.new(data[:id], data[:name], data[:age])
+  # end
+
+  def to_h
+    {
+      age: age,
+      name: name
+    }
+  end
+
   def add_rentals(rental)
     @rentals << rental
     rental.person = self
@@ -23,7 +34,9 @@ class Person < Nameable
   end
 
   def can_use_services?
-    is_of_age? || @parent_permission
+    return true if of_age? || @parent_permission
+
+    false
   end
 
   def generate_id

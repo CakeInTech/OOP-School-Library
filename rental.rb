@@ -1,3 +1,5 @@
+require 'json'
+
 class Rental
   attr_accessor :date, :person, :book
 
@@ -6,6 +8,10 @@ class Rental
     @person = person
     @book = book
     book.rentals << self
-    person.rentals << self
+    # person.rentals << self
+  end
+
+  def to_h
+    { date: @date, person: @person.name, book: @book.title }
   end
 end
