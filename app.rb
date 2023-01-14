@@ -1,4 +1,3 @@
-require 'pry'
 require 'json'
 require 'fileutils'
 require_relative 'rental'
@@ -23,9 +22,8 @@ class App
     list_of_options
     save_data
   end
-  
+
   def list_all_books
-    binding.pry
     if @books.length.positive?
       @books.each do |book|
         puts "Title: #{book.title}, Author: #{book.author}"
@@ -113,7 +111,7 @@ class App
     person_index = gets.chomp.to_i
     @people[person_index]
   end
-  
+
   def list_rental_for_person
     id = yoink_id
     puts 'Rentals:'
@@ -133,39 +131,47 @@ class App
   end
 
   def load_data
-    begin
-    books_json = File.read('books.json')
-  rescue 
-    puts 'books.json file not found'
+    @books = load_books
+    @people = load_people
+    @rentals = load_rentals
   end
-    books_data = JSON.parse(books_json)
+
+  def load_books
+    books = []
+    books_data = read_and_parse_json_file('books.json')
     books_data.each do |book_data|
       book = Book.new(book_data['title'], book_data['author'])
-      @books << book
+      books << book
     end
-
-
-    begin
-    people_data = JSON.parse(File.read('people.json'))
-  rescue
-    puts 'people.json file not found'
+    books
   end
+
+  def load_people
+    people = []
+    people_data = read_and_parse_json_file('people.json')
     people_data.each do |person_data|
       person = Person.new(person_data['age'], person_data['name'])
-      @people << person
+      people << person
     end
-
-    begin
-    rentals_data = JSON.parse(File.read('rentals.json'))
-  rescue
-    puts 'rental.json file not found'
+    people
   end
+
+  def load_rentals
+    rentals = []
+    rentals_data = read_and_parse_json_file('rentals.json')
     rentals_data.each do |rental|
       date = rental['date']
       person = @people.find { |p| p.name == rental['person'] }
       book = @books.find { |b| b.title == rental['book'] }
-      @rentals << Rental.new(date, person, book)
+      rentals << Rental.new(date, person, book)
     end
+    rentals
+  end
+
+  def read_and_parse_json_file(file_name)
+    JSON.parse(File.read(file_name))
+  rescue StandardError
+    puts "#{file_name} file not found"
   end
   #######  Attributes for the methods
 
