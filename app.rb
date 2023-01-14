@@ -23,8 +23,9 @@ class App
     list_of_options
     save_data
   end
-
+  
   def list_all_books
+    binding.pry
     if @books.length.positive?
       @books.each do |book|
         puts "Title: #{book.title}, Author: #{book.author}"
@@ -42,7 +43,7 @@ class App
     @people.each do |person|
       next if person.nil?
 
-      puts "Name: #{person.name}, Age: #{person.age}"
+      puts "Name: #{person.name}, Age: #{person.age}, ID: #{person.id}"
     end
   end
 
@@ -112,7 +113,7 @@ class App
     person_index = gets.chomp.to_i
     @people[person_index]
   end
-
+  
   def list_rental_for_person
     id = yoink_id
     puts 'Rentals:'
@@ -132,24 +133,37 @@ class App
   end
 
   def load_data
+    begin
     books_json = File.read('books.json')
+  rescue 
+    puts 'books.json file not found'
+  end
     books_data = JSON.parse(books_json)
     books_data.each do |book_data|
       book = Book.new(book_data['title'], book_data['author'])
       @books << book
     end
 
+
+    begin
     people_data = JSON.parse(File.read('people.json'))
+  rescue
+    puts 'people.json file not found'
+  end
     people_data.each do |person_data|
       person = Person.new(person_data['age'], person_data['name'])
       @people << person
     end
 
+    begin
     rentals_data = JSON.parse(File.read('rentals.json'))
+  rescue
+    puts 'rental.json file not found'
+  end
     rentals_data.each do |rental|
       date = rental['date']
-      person = @people.find { |p| p.id == rental['person_id'] }
-      book = @books.find { |b| b.id == rental['book_id'] }
+      person = @people.find { |p| p.name == rental['person'] }
+      book = @books.find { |b| b.title == rental['book'] }
       @rentals << Rental.new(date, person, book)
     end
   end
