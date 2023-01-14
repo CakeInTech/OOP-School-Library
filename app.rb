@@ -1,3 +1,5 @@
+require 'json'
+require 'fileutils'
 require_relative 'rental'
 require_relative 'person'
 require_relative 'classroom'
@@ -12,11 +14,13 @@ class App
     @books = []
     @people = []
     @rentals = []
+    load_data
   end
 
   def start
     puts 'Welcome to the Library System!'
     list_of_options
+    save_data
   end
 
   def list_all_books
@@ -30,11 +34,15 @@ class App
   end
 
   def list_all_people
-    if books.empty?
-      puts 'No books found'
+    if @people.empty?
+      puts 'No people found'
       return
     end
-    books.each { |book| puts "Title: #{book.title}, Author: #{book.author}" }
+    @people.each do |person|
+      next if person.nil?
+
+      puts "Name: #{person.name}, Age: #{person.age}, ID: #{person.id}"
+    end
   end
 
   def create_person
@@ -79,7 +87,8 @@ class App
     person = select_person
     puts 'Date:'
     date = gets.chomp
-    @rentals << Rental.new(date, person, book)
+    rental = Rental.new(date, person, book)
+    @rentals << rental
     puts 'Rental created successfully!'
   end
 
@@ -106,11 +115,64 @@ class App
   def list_rental_for_person
     id = yoink_id
     puts 'Rentals:'
-    rentals.select { |rental| rental.person.id == id }.each do |rental|
-      puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
+    @rentals.each do |rental|
+      if rental&.person && rental.person.id.to_i == id.to_i
+        puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
+      else
+        puts 'This person has no book rentals'
+      end
     end
   end
 
+  def save_data
+    File.write('books.json', @books.map(&:to_h).to_json)
+    File.write('rentals.json', @rentals.map(&:to_h).to_json)
+    File.write('people.json', @people.map(&:to_h).to_json)
+  end
+
+  def load_data
+    @books = load_books
+    @people = load_people
+    @rentals = load_rentals
+  end
+
+  def load_books
+    books = []
+    books_data = read_and_parse_json_file('books.json')
+    books_data.each do |book_data|
+      book = Book.new(book_data['title'], book_data['author'])
+      books << book
+    end
+    books
+  end
+
+  def load_people
+    people = []
+    people_data = read_and_parse_json_file('people.json')
+    people_data.each do |person_data|
+      person = Person.new(person_data['age'], person_data['name'])
+      people << person
+    end
+    people
+  end
+
+  def load_rentals
+    rentals = []
+    rentals_data = read_and_parse_json_file('rentals.json')
+    rentals_data.each do |rental|
+      date = rental['date']
+      person = @people.find { |p| p.name == rental['person'] }
+      book = @books.find { |b| b.title == rental['book'] }
+      rentals << Rental.new(date, person, book)
+    end
+    rentals
+  end
+
+  def read_and_parse_json_file(file_name)
+    JSON.parse(File.read(file_name))
+  rescue StandardError
+    puts "#{file_name} file not found"
+  end
   #######  Attributes for the methods
 
   private
@@ -142,9 +204,9 @@ class App
     author = gets.chomp
     { title: title, author: author }
   end
-end
 
-def yoink_id
-  puts 'Enter the ID:'
-  gets.chomp
+  def yoink_id
+    puts 'Enter the ID:'
+    gets.chomp
+  end
 end
