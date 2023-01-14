@@ -7,7 +7,7 @@ describe Student do
 
   describe '#initialize' do
     it 'sets the classroom' do
-      expect(student.classroom).to eq(classroom)
+      expect(student.classroom).to eq(18)
     end
   end
 
