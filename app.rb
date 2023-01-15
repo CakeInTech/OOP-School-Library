@@ -117,9 +117,10 @@ class App
     puts 'Rentals:'
     @rentals.each do |rental|
       if rental&.person && rental.person.id.to_i == id.to_i
+        puts "    "
         puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
-      else
-        puts 'This person has no book rentals'
+        puts "    "
+        break
       end
     end
   end
