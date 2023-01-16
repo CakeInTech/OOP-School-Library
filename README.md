@@ -23,7 +23,7 @@
 
 # 📖 OOP School Library <a name="about-project"></a>
 
-> This is ruby project that will keep track of students and teachers and who borrows any book.
+> This school library management system allows for efficient tracking of library activity. Easily register books and individuals (students and teachers) and create book rentals. Keep track of borrowing dates to ensure timely returns and maintain an organized library.
 
 **[OOP School Library]** is:
 
